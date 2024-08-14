@@ -1,1 +1,5 @@
-console.log('[V12]: Loading V12 modules...');
+function OnInitialize() {
+    console.log('[V12]: Initializing V12 modules...');
+}
+
+OnInitialize();

@@ -5,7 +5,6 @@ mod tests;
 use std::env;
 use crate::engine::engine::Engine;
 use crate::utils::helper::log;
-use crate::utils::helper::about;
 use crate::utils::typescript::process_typescript_file;
 use boa_engine::JsResult;
 
@@ -40,6 +39,8 @@ fn main() -> JsResult<()> {
 }
 
 fn show_about() -> JsResult<()> {
-  about();
+  let engine = Engine::new();
+  engine.run();
+  engine.interpret_js("src/js/AboutV12.js")?;
   Ok(())
 }
