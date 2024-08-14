@@ -1,9 +1,10 @@
 mod engine;
 mod utils;
+mod tests;
 
 use std::env;
 use crate::engine::engine::Engine;
-use crate::utils::helper::{log};
+use crate::utils::helper::log;
 use crate::utils::helper::about;
 use crate::utils::typescript::process_typescript_file;
 use boa_engine::JsResult;
@@ -15,14 +16,14 @@ fn main() -> JsResult<()> {
     return Ok(());
   }
 
-  let arg1 = &args[1];
+  let arg1: &String = &args[1];
 
   match arg1.as_str() {
     arg if arg.ends_with(".ts") => {
       process_typescript_file(arg);
     }
     arg if arg.ends_with(".js") => {
-      let engine = Engine::new();
+      let engine: Engine = Engine::new();
       engine.run();
       log("Engine has started successfully.");
       engine.interpret_js(arg)?;
