@@ -1,5 +1,4 @@
 use std::fs;
-use std::process::Command;
 
 pub fn strip_types(ts_file_path: &str) -> String {
     let ts_content = fs::read_to_string(ts_file_path).expect("[V12]: Unable to read TypeScript file");
@@ -11,18 +10,21 @@ pub fn strip_types(ts_file_path: &str) -> String {
 }
 
 pub fn run_temp_file(temp_file_path: &str) {
-    let output = Command::new("node")
-        .arg(temp_file_path)
-        .output()
-        .expect("[V12]: Failed to execute temporary JavaScript file");
+    let script = fs::read_to_string(temp_file_path).expect("[V12]: Unable to read temporary JavaScript file");
+    let mut context = boa::Context::new();
 
-    if !output.stderr.is_empty() {
-        eprintln!("[V12]: stderr: {}", String::from_utf8_lossy(&output.stderr));
-    }
+    let console = boa::object::ObjectInitializer::new(&mut context)
+        .function(|_, args, _| {
+            if let Some(arg) = args.get(0) {
+                println!("{}", arg.to_string(&mut Default::default()).unwrap_or_default());
+            }
+            Ok(boa::JsValue::Undefined)
+        }, "log", 1)
+        .build();
 
-    if !output.stdout.is_empty() {
-        println!("{}", String::from_utf8_lossy(&output.stdout));
-    }
+    context.register_global_property("console", console, boa::property::Attribute::all());
+
+    context.eval(&script).expect("[V12]: Failed to execute temporary JavaScript file");
 }
 
 pub fn process_typescript_file(ts_file_path: &str) {
