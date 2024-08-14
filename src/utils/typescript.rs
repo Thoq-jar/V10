@@ -1,34 +1,43 @@
 use std::fs;
+use std::path::PathBuf;
+use std::env;
+use boa_engine::{Context, Source, JsResult};
+use crate::utils::helper::register_console;
+
+fn get_full_path(ts_file_path: &str) -> PathBuf {
+    let current_dir = env::current_dir().expect("[V12]: Unable to get current directory");
+    current_dir.join(ts_file_path)
+}
 
 pub fn strip_types(ts_file_path: &str) -> String {
-    let ts_content = fs::read_to_string(ts_file_path).expect("[V12]: Unable to read TypeScript file");
+    let full_path = get_full_path(ts_file_path);
+    let ts_content = match fs::read_to_string(&full_path) {
+        Ok(content) => content,
+        Err(_) => {
+            eprintln!("[V12]: Unable to read TypeScript file: {:?}", full_path.display());
+            std::process::exit(1);
+        }
+    };
     let re = regex::Regex::new(r":\s*\w+(\[])?|<\w+>").unwrap();
     let js_content = re.replace_all(&ts_content, "").to_string();
     let temp_file_path = format!("{}.js", ts_file_path);
-    fs::write(&temp_file_path, js_content).expect("[V12]: Unable to write temporary JavaScript file");
+    fs::write(&temp_file_path, js_content).expect(&format!("[V12]: Unable to write JavaScript file: {:?}", temp_file_path));
     temp_file_path
 }
 
-pub fn run_temp_file(temp_file_path: &str) {
-    let script = fs::read_to_string(temp_file_path).expect("[V12]: Unable to read temporary JavaScript file");
-    let mut context = boa::Context::new();
+pub fn run_temp_file(temp_file_path: &str) -> JsResult<()> {
+    let full_path = get_full_path(temp_file_path);
+    let script = fs::read_to_string(&full_path).expect(&format!("[V12]: Unable to read temporary JavaScript file: {:?}", full_path.display()));
+    let mut context = Context::default();
 
-    let console = boa::object::ObjectInitializer::new(&mut context)
-        .function(|_, args, _| {
-            if let Some(arg) = args.get(0) {
-                println!("{}", arg.to_string(&mut Default::default()).unwrap_or_default());
-            }
-            Ok(boa::JsValue::Undefined)
-        }, "log", 1)
-        .build();
+    register_console(&mut context);
+    context.eval(Source::from_bytes(&script))?;
 
-    context.register_global_property("console", console, boa::property::Attribute::all());
-
-    context.eval(&script).expect("[V12]: Failed to execute temporary JavaScript file");
+    Ok(())
 }
 
 pub fn process_typescript_file(ts_file_path: &str) {
     let temp_file_path = strip_types(ts_file_path);
-    run_temp_file(&temp_file_path);
-    fs::remove_file(temp_file_path).expect("[V12]: Unable to delete temporary JavaScript file");
+    run_temp_file(&temp_file_path).expect(&format!("[V12]: Failed to execute temporary JavaScript file: {:?}", temp_file_path));
+    fs::remove_file(temp_file_path.clone()).expect(&format!("[V12]: Unable to delete temporary JavaScript file: {:?}", temp_file_path));
 }

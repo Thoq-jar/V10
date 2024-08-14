@@ -1,6 +1,6 @@
 use std::fs;
-use boa::{Context, JsValue};
-use boa::object::ObjectInitializer;
+use boa_engine::{Context, Source, JsResult};
+use crate::utils::helper::register_console;
 
 pub struct Engine {
     state: String,
@@ -17,21 +17,13 @@ impl Engine {
         println!("[V12]: Engine running with state: {}", self.state);
     }
 
-    pub fn interpret_js(&self, script_path: &str) {
-        let script = fs::read_to_string(script_path).expect("[V12]: Unable to read file");
-        let mut context = Context::new();
+    pub fn interpret_js(&self, script_path: &str) -> JsResult<()> {
+        let script = fs::read_to_string(script_path).expect(&format!("[V12]: Unable to read file: {}", script_path));
+        let mut context = Context::default();
 
-        let console = ObjectInitializer::new(&mut context)
-            .function(|_, args, _| {
-                if let Some(arg) = args.get(0) {
-                    println!("{}", arg.to_string(&mut Default::default()).unwrap_or_default());
-                }
-                Ok(JsValue::Undefined)
-            }, "log", 1)
-            .build();
+        register_console(&mut context);
+        context.eval(Source::from_bytes(&script))?;
 
-        context.register_global_property("console", console, boa::property::Attribute::all());
-
-        context.eval(&script).expect("[V12]: Failed to execute script");
+        Ok(())
     }
 }
