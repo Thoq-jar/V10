@@ -1,5 +1,21 @@
 ### V12 Engine
+**Please mind that this is currently in development! It is not fast like bun, widely supported like node, im still working on making it better!**
+ 
 
+***TODO: Add support for imports***
+
+## Table of Contents
+- [Description](#description)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Example](#example)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [License](#license)
+
+#### Description
 V12 is a Rust-based engine designed to process and execute JavaScript and TypeScript files. It uses the Boa JavaScript engine for script execution and provides a simple interface for running scripts and displaying information about the engine.
 
 #### Features
@@ -12,17 +28,6 @@ V12 is a Rust-based engine designed to process and execute JavaScript and TypeSc
 - Rust (latest stable version)
 - Cargo (latest stable version)
 - 
-#### Installation
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/V12.git
-   cd V12
-   ```
-
-2. Build the project:
-   ```sh
-   cargo build --release
-   ```
 
 #### Usage
 1. Run a JavaScript file:
@@ -49,7 +54,7 @@ V12 is a Rust-based engine designed to process and execute JavaScript and TypeSc
 
 #### Example
 ```sh
-cargo run examples/hello_world.ts
+cargo run examples/test.ts
 ```
 
 ### Installation
