@@ -69,6 +69,8 @@ cargo run examples/test.ts
    ```
 4. Add the executable generated in target/release to your path and reload terminal!
 
+5. Run `v12 version` or `V12 version` to confim its installed!
+
 #### Contributing
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
