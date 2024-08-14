@@ -3,9 +3,10 @@ mod utils;
 
 use std::env;
 use crate::engine::engine::Engine;
-use crate::utils::helper::{log, register_console};
+use crate::utils::helper::{log};
+use crate::utils::helper::about;
 use crate::utils::typescript::process_typescript_file;
-use boa_engine::{Context, Source, JsResult};
+use boa_engine::JsResult;
 
 fn main() -> JsResult<()> {
   let args: Vec<String> = env::args().collect();
@@ -27,7 +28,7 @@ fn main() -> JsResult<()> {
       engine.interpret_js(arg)?;
     }
     "version" => {
-      about()?;
+      show_about()?;
     }
     _ => {
       eprintln!("[V12]: Error: Script file must have a .js or .ts extension");
@@ -37,14 +38,7 @@ fn main() -> JsResult<()> {
   Ok(())
 }
 
-fn about() -> JsResult<()> {
-  let script_path = "src/js/V12.js";
-  let script = std::fs::read_to_string(script_path).expect("[V12]: Internal error error in engine!");
-  let mut context = Context::default();
-
-  register_console(&mut context);
-  context.eval(Source::from_bytes(&script))?;
-  context.eval(Source::from_bytes("about();"))?;
-
+fn show_about() -> JsResult<()> {
+  about();
   Ok(())
 }

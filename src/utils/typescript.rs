@@ -4,13 +4,13 @@ use std::env;
 use boa_engine::{Context, Source, JsResult};
 use crate::utils::helper::register_console;
 
-fn get_full_path(ts_file_path: &str) -> PathBuf {
+fn path(ts_file_path: &str) -> PathBuf {
     let current_dir = env::current_dir().expect("[V12]: Unable to get current directory");
     current_dir.join(ts_file_path)
 }
 
 pub fn strip_types(ts_file_path: &str) -> String {
-    let full_path = get_full_path(ts_file_path);
+    let full_path = path(ts_file_path);
     let ts_content = match fs::read_to_string(&full_path) {
         Ok(content) => content,
         Err(_) => {
@@ -25,8 +25,8 @@ pub fn strip_types(ts_file_path: &str) -> String {
     temp_file_path
 }
 
-pub fn run_temp_file(temp_file_path: &str) -> JsResult<()> {
-    let full_path = get_full_path(temp_file_path);
+pub fn exec_js(temp_file_path: &str) -> JsResult<()> {
+    let full_path = path(temp_file_path);
     let script = fs::read_to_string(&full_path).expect(&format!("[V12]: Unable to read temporary JavaScript file: {:?}", full_path.display()));
     let mut context = Context::default();
 
@@ -38,6 +38,6 @@ pub fn run_temp_file(temp_file_path: &str) -> JsResult<()> {
 
 pub fn process_typescript_file(ts_file_path: &str) {
     let temp_file_path = strip_types(ts_file_path);
-    run_temp_file(&temp_file_path).expect(&format!("[V12]: Failed to execute temporary JavaScript file: {:?}", temp_file_path));
+  exec_js(&temp_file_path).expect(&format!("[V12]: Failed to execute temporary JavaScript file: {:?}", temp_file_path));
     fs::remove_file(temp_file_path.clone()).expect(&format!("[V12]: Unable to delete temporary JavaScript file: {:?}", temp_file_path));
 }
