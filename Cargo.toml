@@ -1,0 +1,8 @@
+[package]
+name = "V12"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+Boa = "0.13.1"
+regex = "1.10.6"
