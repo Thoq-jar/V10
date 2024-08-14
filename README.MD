@@ -1,4 +1,4 @@
-### V12 Engine
+# V12 JavaScript/TypeScript Runtime
 **Please mind that this is currently in development! It is not fast like bun, widely supported like node, im still working on making it better!**
  
 
