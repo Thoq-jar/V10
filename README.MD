@@ -2,7 +2,7 @@
 **Please mind that this is currently in development! It is not fast like bun, widely supported like node, im still working on making it better!**
  
 
-***TODO: Add support for imports***
+***TODO: Add support for imports es5 and es6***
 
 ## Table of Contents
 - [Description](#description)
@@ -23,11 +23,14 @@ V12 is a Rust-based engine designed to process and execute JavaScript and TypeSc
 - **JavaScript Execution**: Executes JavaScript files using the Boa engine.
 - **Temporary File Management**: Creates and deletes temporary JavaScript files generated from TypeScript files.
 - **Engine Information**: Displays information about the V12 engine.
+- **Debugger**: Provides a simple debugger for debugging JavaScript files. Just add the word `debug` to the end of your `V12` command!
+```shell
+V12 examples/test.ts debug
+```
 
 #### Prerequisites
 - Rust (latest stable version)
 - Cargo (latest stable version)
-- 
 
 #### Usage
 1. Run a JavaScript file:

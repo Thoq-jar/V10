@@ -7,7 +7,7 @@ use crate::engine::engine::Engine;
 use crate::utils::logutil::{colors, log, print_c, styles};
 use crate::utils::typescript::process_typescript_file;
 use boa_engine::JsResult;
-use crate::utils::utils_v12::on_de_initialize;
+use crate::utils::helper::on_de_initialize;
 use std::sync::Mutex;
 use lazy_static::lazy_static;
 
@@ -43,7 +43,9 @@ fn main() -> JsResult<()> {
         arg if arg.ends_with(".js") => {
             let engine: Engine = Engine::new();
             engine.run();
-            log("Engine has started successfully.\n");
+            if *DEBUG.lock().unwrap() {
+                log("Engine has started successfully.\n");
+            }
             engine.begin(arg)?;
         }
         "version" => {
