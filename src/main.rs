@@ -43,5 +43,6 @@ fn show_about() -> JsResult<()> {
   let engine = Engine::new();
   engine.run();
   engine.begin("src/js/AboutV12.js")?;
-  engine.begin("src/js/CleanV12.js")
+  engine.begin("src/js/CleanV12.js")?;
+  Ok(())
 }

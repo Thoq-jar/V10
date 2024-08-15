@@ -46,5 +46,5 @@ pub fn process_typescript_file(ts_file_path: &str) {
     "[V12]: Unable to delete generated JavaScript file: {}",
     temp_file_path
   ));
-  let _ = engine.begin("src/js/CleanV12.js");
+  engine.begin("src/js/CleanV12.js").expect("[V12]: Failed to execute cleanup script");
 }
