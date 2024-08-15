@@ -27,7 +27,7 @@ fn main() -> JsResult<()> {
       engine.run();
       log("Engine has started successfully.\n");
       engine.begin(arg)?;
-      utils::utils_v12::on_de_initialize();
+      on_de_initialize();
     }
     "version" => {
       show_about()?;

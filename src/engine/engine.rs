@@ -1,7 +1,6 @@
-use crate::utils::helper::{register_console, Logger};
+use crate::utils::helper::{register_console};
 use boa_engine::{Context, JsResult, Source};
 use std::fs;
-use std::sync::Arc;
 use crate::*;
 
 pub struct Engine {
@@ -25,7 +24,7 @@ impl Engine {
       .expect(&format!("[V12]: Unable to read file: {}", script_path));
     let mut context: Context = Context::default();
 
-    register_console(&mut context, Arc::new(Logger::new()));
+    register_console(&mut context);
     context.eval(Source::from_bytes(&script))?;
     Ok(())
   }
