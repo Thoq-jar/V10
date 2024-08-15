@@ -52,7 +52,9 @@ V12 examples/test.ts debug
 - `src/main.rs`: Entry point of the application.
 - `src/engine/engine.rs`: Contains the `Engine` struct and methods for running and interpreting JavaScript.
 - `src/utils/typescript.rs`: Functions for processing TypeScript files.
-- `src/utils/helper.rs`: Helper functions for logging.
+- `src/utils/helper.rs`: Helper functions for utils and more.
+- `src/utils/logutil.rs`: Log util for debugging and logging on V12. (Not the JS/TS being executed)
+
 
 #### Example
 ```sh
