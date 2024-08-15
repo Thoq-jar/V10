@@ -85,6 +85,8 @@ sudo rm -rf /usr/local/bin/V12
 sudo rm -rf /usr/local/bin/v12
 sudo cp target/release/V12 /usr/local/bin/V12
 sudo cp target/release/V12 /usr/local/bin/v12
+cd ..
+rm -rf V12
 ```
 
 #### Contributing
