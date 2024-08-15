@@ -15,8 +15,10 @@ impl Engine {
   }
 
   pub fn run(&self) {
-    utils::utils_v12::on_initialize();
-    println!("[V12]: Engine running with state: {}", self.state);
+    if *DEBUG.lock().unwrap() {
+      utils::utils_v12::on_initialize();
+      println!("[V12]: Engine running with state: {}", self.state);
+    }
   }
 
   pub fn begin(&self, script_path: &str) -> JsResult<()> {
@@ -26,6 +28,10 @@ impl Engine {
 
     register_console(&mut context);
     context.eval(Source::from_bytes(&script))?;
-    Ok(())
+    if *DEBUG.lock().unwrap() {
+      Ok(on_de_initialize())
+    } else {
+      Ok(())
+    }
   }
 }

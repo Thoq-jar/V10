@@ -1,9 +1,5 @@
 use boa_engine::{object::FunctionBinding, object::ObjectInitializer, property::PropertyKey, Context, JsObject, JsString, JsValue, NativeFunction};
 
-pub fn log(message: &str) {
-  println!("[V12]: {}", message);
-}
-
 pub fn register_console(context: &mut Context) {
   let log_function = {
 

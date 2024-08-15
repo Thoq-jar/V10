@@ -3,8 +3,8 @@ use std::env;
 use std::fs;
 use std::path::PathBuf;
 use regex::Regex;
-use crate::utils::helper::log;
-use crate::utils::utils_v12::on_de_initialize;
+use crate::DEBUG;
+use crate::utils::logutil::log;
 
 fn path(ts_file_path: &str) -> PathBuf {
   let current_dir: PathBuf = env::current_dir().expect("[V12]: Unable to get current directory");
@@ -38,7 +38,9 @@ pub fn process_typescript_file(ts_file_path: &str) {
   let temp_file_path: String = strip_types(ts_file_path);
   let engine = Engine::new();
   engine.run();
-  log("Engine has started successfully.\n");
+  if *DEBUG.lock().unwrap() {
+    log("Engine has started successfully.\n");
+  }
   engine.begin(&temp_file_path).expect(&format!(
     "[V12]: Failed to execute TypeScript file: {}",
     temp_file_path
@@ -47,5 +49,4 @@ pub fn process_typescript_file(ts_file_path: &str) {
     "[V12]: Unable to delete generated JavaScript file: {}",
     temp_file_path
   ));
-  on_de_initialize();
 }
