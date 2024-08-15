@@ -50,7 +50,6 @@ V12 is a Rust-based engine designed to process and execute JavaScript and TypeSc
 - `src/engine/engine.rs`: Contains the `Engine` struct and methods for running and interpreting JavaScript.
 - `src/utils/typescript.rs`: Functions for processing TypeScript files.
 - `src/utils/helper.rs`: Helper functions for logging.
-- `src/js/V12.js`: JavaScript file containing the `about` function.
 
 #### Example
 ```sh

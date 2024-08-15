@@ -7,6 +7,7 @@ use crate::engine::engine::Engine;
 use crate::utils::helper::log;
 use crate::utils::typescript::process_typescript_file;
 use boa_engine::JsResult;
+use crate::utils::utils_v12::on_de_initialize;
 
 fn main() -> JsResult<()> {
   let args: Vec<String> = env::args().collect();
@@ -26,7 +27,7 @@ fn main() -> JsResult<()> {
       engine.run();
       log("Engine has started successfully.\n");
       engine.begin(arg)?;
-      engine.begin("src/js/CleanV12.js")?;
+      utils::utils_v12::on_de_initialize();
     }
     "version" => {
       show_about()?;
@@ -42,7 +43,7 @@ fn main() -> JsResult<()> {
 fn show_about() -> JsResult<()> {
   let engine = Engine::new();
   engine.run();
-  engine.begin("src/js/AboutV12.js")?;
-  engine.begin("src/js/CleanV12.js")?;
+  utils::about_v12::about_v12();
+  on_de_initialize();
   Ok(())
 }

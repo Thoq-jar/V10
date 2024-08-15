@@ -4,6 +4,7 @@ use std::fs;
 use std::path::PathBuf;
 use regex::Regex;
 use crate::utils::helper::log;
+use crate::utils::utils_v12::on_de_initialize;
 
 fn path(ts_file_path: &str) -> PathBuf {
   let current_dir: PathBuf = env::current_dir().expect("[V12]: Unable to get current directory");
@@ -46,5 +47,5 @@ pub fn process_typescript_file(ts_file_path: &str) {
     "[V12]: Unable to delete generated JavaScript file: {}",
     temp_file_path
   ));
-  engine.begin("src/js/CleanV12.js").expect("[V12]: Failed to execute cleanup script");
+  on_de_initialize();
 }

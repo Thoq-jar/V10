@@ -2,6 +2,7 @@ use crate::utils::helper::{register_console, Logger};
 use boa_engine::{Context, JsResult, Source};
 use std::fs;
 use std::sync::Arc;
+use crate::*;
 
 pub struct Engine {
   pub(crate) state: String,
@@ -15,8 +16,7 @@ impl Engine {
   }
 
   pub fn run(&self) {
-    self.begin("src/js/V12.js")
-      .expect("[V12]: Unable to start the engine!");
+    utils::utils_v12::on_initialize();
     println!("[V12]: Engine running with state: {}", self.state);
   }
 
