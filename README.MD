@@ -75,6 +75,18 @@ cargo run examples/test.ts
 
 5. Run `v12 version` or `V12 version` to confim its installed!
 
+**Linux/macOS only install:**
+```sh
+rm -rf V12
+git clone https://github.com/Thoq-jar/V12.git
+cd V12
+cargo build --release
+sudo rm -rf /usr/local/bin/V12
+sudo rm -rf /usr/local/bin/v12
+sudo cp target/release/V12 /usr/local/bin/V12
+sudo cp target/release/V12 /usr/local/bin/v12
+```
+
 #### Contributing
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
