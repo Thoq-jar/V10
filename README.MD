@@ -64,8 +64,8 @@ cargo run examples/test.ts
 ### Installation
 1. Clone the repository:
    ```sh
-   git clone
-    cd V12
+   git clone https://github.com/Thoq-jar/V12.git
+   cd V12
     ```
 2. Build the project:
 3. ```sh
