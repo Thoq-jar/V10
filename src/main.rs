@@ -24,8 +24,9 @@ fn main() -> JsResult<()> {
     arg if arg.ends_with(".js") => {
       let engine: Engine = Engine::new();
       engine.run();
-      log("Engine has started successfully.");
-      engine.interpret_js(arg)?;
+      log("Engine has started successfully.\n");
+      engine.begin(arg)?;
+      engine.begin("src/js/CleanV12.js")?;
     }
     "version" => {
       show_about()?;
@@ -41,6 +42,6 @@ fn main() -> JsResult<()> {
 fn show_about() -> JsResult<()> {
   let engine = Engine::new();
   engine.run();
-  engine.interpret_js("src/js/AboutV12.js")?;
-  Ok(())
+  engine.begin("src/js/AboutV12.js")?;
+  engine.begin("src/js/CleanV12.js")
 }

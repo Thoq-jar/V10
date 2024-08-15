@@ -1,4 +1,4 @@
-export function aboutV12() {
+function aboutV12() {
   const banner = `
 ____    ____  __   ___       _______ .__   __.   _______  __  .__   __.  _______
 \\   \\  /   / /_ | |__ \\     |   ____||  \\ |  |  /  _____||  | |  \\ |  | |   ____|
@@ -10,7 +10,7 @@ ____    ____  __   ___       _______ .__   __.   _______  __  .__   __.  _______
   print_c(colors.magenta, styles.bold, banner);
   n_line();
   print_c(colors.magenta, styles.bold, "About V12 - A simple, lightweight, and easy-to-use JavaScript Interpreter/Engine written in Rust.");
-  print_c(colors.magenta, styles.bold, "Version: 1.0.0");
+  print_c(colors.magenta, styles.bold, "Version: 0.4.0");
   print_c(colors.magenta, styles.bold, "Author(s): Thoq");
   print_c(colors.magenta, styles.bold, "License: MIT");
   print_c(colors.magenta, styles.bold, "Build: 81424 (development)");
