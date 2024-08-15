@@ -19,7 +19,7 @@ pub fn register_console(context: &mut Context) {
     }
   };
 
-  let log_function_native: NativeFunction = unsafe { NativeFunction::from_closure(log_function) };
+  let log_function_native: NativeFunction = NativeFunction::from_fn_ptr(log_function);
 
   let console: JsObject = ObjectInitializer::new(context)
     .function(
