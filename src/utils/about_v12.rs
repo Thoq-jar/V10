@@ -1,4 +1,9 @@
-use crate::utils::logutil::*;
+use super::logutil::{
+  colors,
+  styles,
+  n_line,
+  print_c
+};
 
 pub(crate) fn about_v12() {
   let banner = r#"
@@ -12,7 +17,7 @@ ____    ____  __   ___      .______       __    __  .__   __. .___________. __  
   print_c(colors::MAGENTA, styles::BOLD, banner);
   n_line();
   print_c(colors::MAGENTA, styles::BOLD, " About V12 - A simple, lightweight, and easy-to-use JavaScript Runtime written in Rust.\n");
-  print_c(colors::MAGENTA, styles::BOLD, " Version: 0.5.1\n");
+  print_c(colors::MAGENTA, styles::BOLD, " Version: 0.5.2\n");
   print_c(colors::MAGENTA, styles::BOLD, " Author(s): Thoq\n");
   print_c(colors::MAGENTA, styles::BOLD, " License: MIT\n");
   print_c(colors::MAGENTA, styles::BOLD, " Build: 10424 (development)\n");

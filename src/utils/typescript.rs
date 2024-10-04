@@ -1,10 +1,12 @@
-use crate::engine::engine::Engine;
+use crate::{
+  DEBUG,
+  engine::engine::Engine
+};
+use super::logutil::log;
 use std::env;
 use std::fs;
 use std::path::PathBuf;
 use regex::Regex;
-use crate::DEBUG;
-use crate::utils::logutil::log;
 
 fn path(ts_file_path: &str) -> PathBuf {
   let current_dir: PathBuf = env::current_dir().expect("[V12]: Unable to get current directory");
@@ -34,13 +36,16 @@ pub fn strip_types(ts_file_path: &str) -> String {
   temp_file_path
 }
 
-pub fn process_typescript_file(ts_file_path: &str) {
+pub fn process_file(ts_file_path: &str) {
   let temp_file_path: String = strip_types(ts_file_path);
   let engine = Engine::new();
   engine.run();
-  if *DEBUG.lock().unwrap() {
-    log("Engine has started successfully.\n");
-  }
+  match *DEBUG.lock().unwrap() {
+    true => {
+        log("Engine has started successfully.\n");
+      }
+    false => (),
+}
   engine.begin(&temp_file_path).expect(&format!(
     "[V12]: Failed to execute TypeScript file: {}",
     temp_file_path

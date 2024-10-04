@@ -1,6 +1,21 @@
-use boa_engine::{object::FunctionObjectBuilder, object::ObjectInitializer, property::PropertyKey, Context, JsObject, JsString, JsValue, JsResult, Source, native_function::NativeFunction};
+use crate::{
+  DEBUG,
+  utils::{self,helper::on_de_initialize}
+};
+use boa_engine::{
+  object::FunctionObjectBuilder,
+  object::ObjectInitializer,
+  property::PropertyKey,
+  Context,
+  JsObject,
+  JsString,
+  JsValue,
+  JsResult,
+  Source,
+  native_function::NativeFunction
+};
 use std::fs;
-use crate::*;
+
 
 pub struct Engine {
   pub(crate) state: String,
@@ -74,15 +89,18 @@ fn console_function(context: &mut Context) -> JsObject {
 fn require_function(context: &mut Context) -> JsObject {
   let require_function: NativeFunction = NativeFunction::from_fn_ptr(move |_arg0: &JsValue, arg1: &[JsValue], _arg2: &mut Context| {
     if let Some(arg) = arg1.first() {
-      if let Ok(module_path) = arg.to_string(_arg2) {
-        if let Ok(module_path_str) = module_path.to_std_string() {
-          let module_script = fs::read_to_string(module_path_str).expect("Unable to read module file");
-          let module = _arg2.eval(Source::from_bytes(&module_script)).expect("Failed to evaluate module");
-          if let Some(exports) = module.as_object() {
-            return Ok(exports.get(PropertyKey::from(JsString::from("test1")), _arg2).unwrap_or(JsValue::Undefined));
+      match arg.to_string(_arg2) {
+        Ok(module_path) => {
+            if let Ok(module_path_str) = module_path.to_std_string() {
+              let module_script = fs::read_to_string(module_path_str).expect("Unable to read module file");
+              let module = _arg2.eval(Source::from_bytes(&module_script)).expect("Failed to evaluate module");
+              if let Some(exports) = module.as_object() {
+                return Ok(exports.get(PropertyKey::from(JsString::from("test1")), _arg2).unwrap_or(JsValue::Undefined));
+              }
+            }
           }
-        }
-      }
+        _ => (),
+    }
     }
     Ok(JsValue::Undefined)
   });
