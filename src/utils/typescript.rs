@@ -1,28 +1,23 @@
 use crate::{
   DEBUG,
-  engine::engine::Engine
+  engine::engine::Engine,
+  utils::helper::path
+};
+use std::{
+  fs,
+  path::PathBuf,
+  process::exit
 };
 use super::logutil::log;
-use std::env;
-use std::fs;
-use std::path::PathBuf;
 use regex::Regex;
-
-fn path(ts_file_path: &str) -> PathBuf {
-  let current_dir: PathBuf = env::current_dir().expect("[V12]: Unable to get current directory");
-  current_dir.join(ts_file_path)
-}
 
 pub fn strip_types(ts_file_path: &str) -> String {
   let full_path: PathBuf = path(ts_file_path);
   let ts_content: String = match fs::read_to_string(&full_path) {
     Ok(content) => content,
     Err(_) => {
-      eprintln!(
-        "[V12]: Unable to read TypeScript file: {:?}",
-        full_path.display()
-      );
-      std::process::exit(1);
+      eprintln!("[V12]: Unable to read TypeScript file: {:?}", full_path.display());
+      exit(1);
     }
   };
 

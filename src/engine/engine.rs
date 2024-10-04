@@ -1,6 +1,10 @@
 use crate::{
   DEBUG,
-  utils::{self,helper::on_de_initialize}
+  utils::{
+    self,
+    helper::on_de_initialize,
+    helper::path
+  }
 };
 use boa_engine::{
   object::FunctionObjectBuilder,
@@ -14,8 +18,11 @@ use boa_engine::{
   Source,
   native_function::NativeFunction
 };
-use std::fs;
-
+use std::{
+  fs,
+  process::exit,
+  path::PathBuf
+};
 
 pub struct Engine {
   pub(crate) state: String,
@@ -36,7 +43,14 @@ impl Engine {
   }
 
   pub fn begin(&self, script_path: &str) -> JsResult<()> {
-    let script: String = fs::read_to_string(script_path).expect(&format!("[V12]: Unable to read file: {}", script_path));
+    let full_path: PathBuf = path(script_path);
+    let script: String = match fs::read_to_string(script_path) {
+        Ok(content) => content,
+        Err(_) => {
+          eprintln!("[V12]: Unable to read JavaScript file: {:?}", full_path.display());
+          exit(1);
+        }
+    };
     let mut context: Context = Context::default();
 
     self.register_global_function(&mut context, "console", console_function);
