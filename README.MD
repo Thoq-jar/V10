@@ -1,4 +1,4 @@
-# V12 JavaScript/TypeScript Runtime
+# V10 JavaScript/TypeScript Runtime
 **Please mind that this is currently in development! It is not fast like bun, widely supported like node, im still working on making it better!**
  
 
@@ -16,16 +16,16 @@
 - [License](#license)
 
 #### Description
-V12 is a Rust-based engine designed to process and execute JavaScript and TypeScript files. It uses the Boa JavaScript engine for script execution and provides a simple interface for running scripts and displaying information about the engine.
+V10 is a Rust-based engine designed to process and execute JavaScript and TypeScript files. It uses the Boa JavaScript engine for script execution and provides a simple interface for running scripts and displaying information about the engine.
 
 #### Features
 - **TypeScript to JavaScript Conversion**: Strips TypeScript types and converts `.ts` files to `.js` files.
 - **JavaScript Execution**: Executes JavaScript files using the Boa engine.
 - **Temporary File Management**: Creates and deletes temporary JavaScript files generated from TypeScript files.
-- **Engine Information**: Displays information about the V12 engine.
-- **Debugger**: Provides a simple debugger for debugging JavaScript files. Just add the word `debug` to the end of your `V12` command!
+- **Engine Information**: Displays information about the V10 engine.
+- **Debugger**: Provides a simple debugger for debugging JavaScript files. Just add the word `debug` to the end of your `V10` command!
 ```shell
-V12 examples/test.ts debug
+V10 examples/test.ts debug
 ```
 
 #### Prerequisites
@@ -53,7 +53,7 @@ V12 examples/test.ts debug
 - `src/engine/engine.rs`: Contains the `Engine` struct and methods for running and interpreting JavaScript.
 - `src/utils/typescript.rs`: Functions for processing TypeScript files.
 - `src/utils/helper.rs`: Helper functions for utils and more.
-- `src/utils/logutil.rs`: Log util for debugging and logging on V12. (Not the JS/TS being executed)
+- `src/utils/logutil.rs`: Log util for debugging and logging on V10. (Not the JS/TS being executed)
 
 
 #### Example
@@ -64,8 +64,8 @@ cargo run examples/test.ts
 ### Installation
 1. Clone the repository:
    ```sh
-   git clone https://github.com/Thoq-jar/V12.git
-   cd V12
+   git clone https://github.com/Thoq-jar/V10.git
+   cd V10
     ```
 2. Build the project:
 3. ```sh
@@ -73,20 +73,20 @@ cargo run examples/test.ts
    ```
 4. Add the executable generated in target/release to your path and reload terminal!
 
-5. Run `v12 version` or `V12 version` to confim its installed!
+5. Run `V10 version` or `V10 version` to confim its installed!
 
 **Linux/macOS only install:**
 ```sh
-rm -rf V12
-git clone https://github.com/Thoq-jar/V12.git
-cd V12
+rm -rf V10
+git clone https://github.com/Thoq-jar/V10.git
+cd V10
 cargo build --release
-sudo rm -rf /usr/local/bin/V12
-sudo rm -rf /usr/local/bin/v12
-sudo cp target/release/V12 /usr/local/bin/V12
-sudo cp target/release/V12 /usr/local/bin/v12
+sudo rm -rf /usr/local/bin/V10
+sudo rm -rf /usr/local/bin/V10
+sudo cp target/release/V10 /usr/local/bin/V10
+sudo cp target/release/V10 /usr/local/bin/V10
 cd ..
-rm -rf V12
+rm -rf V10
 ```
 
 #### Contributing
