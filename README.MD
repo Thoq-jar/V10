@@ -81,7 +81,7 @@ rm -rf V10
 git clone https://github.com/Thoq-jar/V10.git
 cd V10
 cargo build --release
-sudo mv target/release/V10 /usr/local/bin/V10
+sudo mv target/release/V10 /usr/local/bin/v10
 cd ..
 rm -rf V10
 ```
